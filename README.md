@@ -1,1 +1,2 @@
 # Farm2Market
+FARM2MARKET is a web-based platform designed to empower small and marginal farmers in India by enabling them to sell their crops directly to consumers, such as households, restaurants, and local vendors — without involving middlemen. The platform also integrates a machine learning-based price prediction system to provide farmers with smart, data-driven suggestions on when and at what price to sell their produce.
