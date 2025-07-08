@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration</title>
+  <link rel="stylesheet" href="registrationformstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+</head>
+<body>
+  <form onsubmit="saveAndContinue(); return false;">
+    <h1>Registration/Login</h1>
+
+    <label for="name">name</label>
+    <input type="text" id="name" required /><br /><br />
+
+    <label for="state">state</label>
+    <input type="text" id="state" required /><br /><br />
+
+    <label for="district">district</label>
+    <input type="text" id="district" required /><br /><br />
+
+    <label for="email">email</label>
+    <input type="email" id="email" /><br /><br />
+
+    <label for="phone">phone</label>
+    <input type="tel" id="phone" required /><br /><br />
+
+    <label for="address">address</label>
+    <input type="text" id="address" required /><br /><br />
+
+    <p>type</p>
+    <input type="radio" id="seller" name="type" />
+    <label for="seller">Seller</label>
+
+    <input type="radio" id="buyer" name="type" />
+    <label for="buyer">Buyer</label>
+    <br /><br />
+
+    <button type="submit">Next</button>
+  </form>
+
+  <script>
+    function saveAndContinue() {
+      const data = {
+        name: document.getElementById('name').value,
+        state: document.getElementById('state').value,
+        district: document.getElementById('district').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        type: document.querySelector('input[name="type"]:checked')?.id
+      };
+
+      if (!data.type) {
+        alert("Please select if you are a Seller or Buyer.");
+        return;
+      }
+
+      localStorage.setItem("formData", JSON.stringify(data));
+    if (data.type === "seller") {
+      window.location.href = "sellingcrops.html";
+    } else  {
+      window.location.href = "buying crops.html";
+    }
+  }
+  </script>
+</body>
+</html>
