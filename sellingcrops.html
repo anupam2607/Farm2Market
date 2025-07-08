@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selling Page</title>
+  <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+  <link rel="stylesheet" href="sellingcropsstye.css">
+</head>
+<body>
+  <form onsubmit="finalSubmit(); return false;">
+    <label for="crop">Crop Name:</label>
+    <input type="text" id="crop" required><br><br>
+
+    <label for="area">Land Area (acres):</label>
+    <input type="text" id="area" required><br><br>
+
+    <label for="photo">Upload Image:</label>
+    <input type="file" id="photo" name="photo" accept="image/*" required><br><br>
+
+    <img id="preview" alt="Preview" style="max-width: 200px; display: none;" /><br><br>
+
+    <button type="submit" id="submitBtn">Submit</button>
+  </form>
+    <script>
+    const client = new window.Appwrite.Client()
+      .setEndpoint("https://cloud.appwrite.io/v1")
+      .setProject("686b85470029b0abd0e8"); 
+
+    const databases = new window.Appwrite.Databases(client);
+    const storage = new window.Appwrite.Storage(client);
+
+    
+    document.getElementById("photo").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.getElementById("preview");
+          img.src = e.target.result;
+          img.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    async function finalSubmit() {
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Uploading...";
+
+      const storedData = JSON.parse(localStorage.getItem("formData"));
+      if (!storedData) {
+        alert("Missing previous form data.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
+        return;
+      }
+
+      const crop = document.getElementById("crop").value;
+      const area = document.getElementById("area").value;
+      const photoFile = document.getElementById("photo").files[0];
+
+      if (!photoFile) {
+        alert("Please upload a photo.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
+        return;
+      }
+
+      try {
+        
+        const upload = await storage.createFile(
+          "686ba50b0013858fc171", 
+          "unique()",
+          photoFile,
+          [window.Appwrite.Permission.read("any")]
+        );
+
+        const photoId = upload.$id;
+
+        const finalData = {
+          ...storedData,
+          crop,
+          area,
+          photo: photoId
+        };
+
+        await databases.createDocument(
+          "686b857300047cc7dd66", 
+          "686b85ae000b823a9ea7", 
+          "unique()",
+          finalData
+        );
+
+        alert("✅ Submitted successfully!");
+        localStorage.removeItem("formData");
+
+        document.querySelector("form").reset();
+        document.getElementById("preview").style.display = "none";
+
+      } catch (error) {
+        console.error("❌ Submission failed:", error);
+        alert("Submission failed: " + error.message);
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit";
+    }
+  </script>
+</body>
+</html>
