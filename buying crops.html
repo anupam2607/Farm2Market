@@ -6,9 +6,34 @@
   <title>Search Crops</title>
   <link rel="stylesheet" href="buyingcrops.css" />
   <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
-  <script src="buy.js" defer></script>
+  <script src="buy.js" ></script>
 </head>
  <body>
+    <form id="searchForm">
+    <h1>Details of crop you want to buy:</h1>
+
+    <label for="crop">Crop you want to buy:</label>
+    <select id="crop">
+      <option value="Wheat">Wheat</option>
+      <option value="Rice">Rice</option>
+      <option value="Maize">Maize</option>
+      <option value="Other">Other</option>
+    </select>
+    <br><br>
+
+    <label for="range">Nearby farmers you want to search:</label>
+    <select id="range">
+      <option value="30">30 KM</option>
+      <option value="50">50 KM</option>
+      <option value="70">70 KM</option>
+      <option value="100">100 KM</option>
+    </select>
+    <br><br>
+
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="results"></div>
     
 
 
