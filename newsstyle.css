@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    /* min-height: 790px; */
+    background-color: rgb(224, 216, 216);
+    background-image: rgb(224, 216, 216);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    width: 400px;
+    height: 700px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+}
+
+.box img {
+    height: 60%;
+    border-radius: 20px;
+}
+
+.box h2 {
+    text-align: center;
+}
+
+.box p {
+    text-align: center;
+}
+
+.news1{
+    height: 30%;
+    width: 80%;
+}
+
+.news2{
+    height: 20%;
+    width: 80%;
+}
+
+.news3{
+    height: 30%;
+    width: 80%;
+}
